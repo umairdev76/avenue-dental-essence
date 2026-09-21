@@ -9,9 +9,8 @@ import { PendingContent } from "./ui";
  */
 export function GalleryGrid({ category }: { category?: string }) {
   const [active, setActive] = useState<number | null>(null);
-  const images = category
-    ? galleryImages.filter((i) => i.category === category)
-    : galleryImages;
+  const images = category ? galleryImages.filter((i) => i.category === category) : galleryImages;
+  const activeImage = active === null ? null : (images[active] ?? null);
 
   useEffect(() => {
     if (active === null) return;
@@ -25,9 +24,9 @@ export function GalleryGrid({ category }: { category?: string }) {
   if (images.length === 0) {
     return (
       <PendingContent title="Clinic photography coming soon">
-        This gallery is built and ready. It will display real photographs of Dental Avenue —
-        the clinic, treatment areas and team — as soon as they are supplied. No stock or
-        generated imagery is used to represent the clinic.
+        This gallery is built and ready. It will display real photographs of Dental Avenue — the
+        clinic, treatment areas and team — as soon as they are supplied. No stock or generated
+        imagery is used to represent the clinic.
       </PendingContent>
     );
   }
@@ -54,7 +53,7 @@ export function GalleryGrid({ category }: { category?: string }) {
         ))}
       </div>
 
-      {active !== null && (
+      {activeImage && (
         <div
           role="dialog"
           aria-modal="true"
@@ -71,8 +70,8 @@ export function GalleryGrid({ category }: { category?: string }) {
             <X className="size-6" aria-hidden="true" />
           </button>
           <img
-            src={images[active].src}
-            alt={images[active].alt}
+            src={activeImage.src}
+            alt={activeImage.alt}
             className="max-h-[85vh] max-w-full rounded-sm object-contain"
           />
         </div>

@@ -56,7 +56,7 @@ export function Header() {
           >
             Dental Avenue
           </span>
-          <span className="eyebrow mt-1 text-[0.5625rem] text-muted-foreground">
+          <span className="mt-1 text-xs text-muted-foreground">
             Sambrial · Sialkot
           </span>
         </Link>
@@ -67,7 +67,7 @@ export function Header() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              className="relative py-1 text-sm text-foreground/80 transition-colors hover:text-teal data-[status=active]:text-navy"
+              className="relative py-1 text-sm text-foreground transition-colors hover:text-teal data-[status=active]:text-navy"
             >
               {item.label}
               <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-teal transition-all duration-300 group-hover:w-full" />
@@ -83,7 +83,7 @@ export function Header() {
             <Phone aria-hidden="true" className="size-4" />
             {clinic.phoneDisplay}
           </a>
-          <Link to="/contact" className={cn(buttonStyles.primary, "h-10 min-h-10")}>
+          <Link to="/contact" className={cn(buttonStyles.accent, "h-10 min-h-10")}>
             Book Appointment
           </Link>
         </div>
@@ -94,6 +94,7 @@ export function Header() {
           className="inline-flex size-11 items-center justify-center text-navy lg:hidden"
           aria-label="Open menu"
           aria-expanded={open}
+          aria-controls="mobile-navigation"
         >
           <Menu className="size-6" aria-hidden="true" />
         </button>
@@ -102,12 +103,12 @@ export function Header() {
       {/* Mobile full-screen menu */}
       <div
         className={cn(
-          "fixed inset-0 z-50 flex flex-col ink-panel transition-all duration-400 lg:hidden",
+          "fixed inset-0 z-60 flex min-h-[100dvh] flex-col overflow-y-auto overscroll-contain ink-panel transition-all duration-400 lg:hidden",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
         aria-hidden={!open}
       >
-        <div className="shell flex h-20 items-center justify-between">
+        <div className="shell flex min-h-20 items-center justify-between">
           <span className="font-display text-2xl text-ivory">Dental Avenue</span>
           <button
             type="button"
@@ -118,20 +119,24 @@ export function Header() {
             <X className="size-6" aria-hidden="true" />
           </button>
         </div>
-        <nav aria-label="Mobile" className="shell flex flex-1 flex-col justify-center gap-1">
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile"
+          className="shell flex flex-1 flex-col justify-start gap-1 py-5 sm:justify-center sm:py-8"
+        >
           {nav.map((item, i) => (
             <Link
               key={item.to}
               to={item.to}
               tabIndex={open ? 0 : -1}
-              className="border-b border-ivory/10 py-4 font-display text-3xl text-ivory transition-colors hover:text-gold"
+              className="border-b border-ivory/10 py-2.5 font-display text-2xl text-ivory transition-colors hover:text-gold sm:py-3 sm:text-3xl"
               style={{ transitionDelay: `${i * 20}ms` }}
             >
               {item.label}
             </Link>
           ))}
         </nav>
-        <div className="shell flex flex-col gap-3 pb-10">
+        <div className="shell flex shrink-0 flex-col gap-3 pb-6 pt-3 sm:pb-10">
           <a href={clinic.phoneHref} className={buttonStyles.onDark} tabIndex={open ? 0 : -1}>
             Call {clinic.phoneDisplay}
           </a>

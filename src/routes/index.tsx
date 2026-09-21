@@ -18,7 +18,7 @@ import {
   WhySection,
 } from "@/components/site/sections";
 import { LinkButton, SectionHeading, buttonStyles } from "@/components/site/ui";
-import { clinic, faqs } from "@/lib/clinic";
+import { clinic, faqs, galleryImages } from "@/lib/clinic";
 import { dentistSchema, faqSchema } from "@/lib/schema";
 
 export const Route = createFileRoute("/")({
@@ -73,7 +73,7 @@ function Hero() {
             </h1>
           </Reveal>
           <Reveal delay={240}>
-            <p className="mt-7 max-w-lg text-base leading-relaxed text-ivory/75">
+            <p className="mt-7 max-w-lg text-base leading-relaxed text-ivory/70">
               A dental clinic in Sambrial, Sialkot, offering general, cosmetic and restorative
               treatment areas under the care of Dr. Umar Iqbal, BDS.
             </p>
@@ -89,7 +89,7 @@ function Hero() {
             </div>
           </Reveal>
           <Reveal delay={440}>
-            <p className="mt-9 inline-flex items-center gap-2 text-sm text-ivory/60">
+            <p className="mt-9 inline-flex items-center gap-2 text-sm text-ivory/70">
               <MapPin className="size-4 text-gold" aria-hidden="true" />
               Sambrial, Sialkot
             </p>
@@ -111,9 +111,9 @@ function Introduction() {
             intro="Dental Avenue is a dental clinic in Fazalpura, Sambrial, on the Sialkot–Wazirabad Dual Carriageway. Patients from Sambrial and the wider Sialkot area can reach the clinic easily by road."
           />
           <p className="body-lg mt-5">
-            The clinic is publicly associated with a range of dental treatment areas — from
-            routine examinations and cleaning through to implants, orthodontics and cosmetic
-            work. What is right for you is decided together with the dentist at consultation.
+            The clinic is publicly associated with a range of dental treatment areas — from routine
+            examinations and cleaning through to implants, orthodontics and cosmetic work. What is
+            right for you is decided together with the dentist at consultation.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <LinkButton to="/about" variant="secondary" withArrow>
@@ -153,20 +153,22 @@ function Home() {
       <PatientJourney />
       <BeforeAfterSection />
 
-      <section className="section" aria-labelledby="gallery-heading">
-        <div className="shell">
-          <Reveal>
-            <SectionHeading
-              align="center"
-              eyebrow="Gallery"
-              title={<span id="gallery-heading">Inside Dental Avenue</span>}
-            />
-          </Reveal>
-          <Reveal delay={80} className="mt-12">
-            <GalleryGrid />
-          </Reveal>
-        </div>
-      </section>
+      {galleryImages.length > 0 && (
+        <section className="section" aria-labelledby="gallery-heading">
+          <div className="shell">
+            <Reveal>
+              <SectionHeading
+                align="center"
+                eyebrow="Gallery"
+                title={<span id="gallery-heading">Inside Dental Avenue</span>}
+              />
+            </Reveal>
+            <Reveal delay={80} className="mt-12">
+              <GalleryGrid />
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       <ReviewsSection />
 

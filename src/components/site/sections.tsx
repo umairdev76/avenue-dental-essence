@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, MapPin, Phone } from "lucide-react";
-import { clinic, doctor, reviews, services } from "@/lib/clinic";
+import { beforeAfterCases, clinic, doctor, reviews, services } from "@/lib/clinic";
 import { Reveal } from "./Reveal";
-import { AnchorButton, LinkButton, PendingContent, SectionHeading, buttonStyles } from "./ui";
+import { AnchorButton, LinkButton, SectionHeading, buttonStyles } from "./ui";
 
 import featureGeneral from "@/assets/feature-general.jpg";
 import featureImplants from "@/assets/feature-implants.jpg";
@@ -20,13 +20,15 @@ export function TrustBar() {
   ];
   return (
     <section aria-label="Clinic at a glance" className="border-y border-hairline bg-card">
-      <div className="shell grid grid-cols-2 divide-hairline md:grid-cols-4 md:divide-x">
-        {items.map((item, i) => (
-          <Reveal key={item.k} delay={i * 70} className="px-2 py-8 text-center md:py-10">
-            <p className="font-display text-xl text-navy sm:text-2xl">{item.k}</p>
-            <p className="eyebrow mt-2 text-[0.625rem] text-muted-foreground">{item.v}</p>
-          </Reveal>
-        ))}
+      <div className="shell">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 divide-hairline md:grid-cols-4 md:divide-x">
+          {items.map((item, i) => (
+            <Reveal key={item.k} delay={i * 70} className="px-2 py-6 text-center md:py-8">
+              <p className="font-display text-xl text-navy sm:text-2xl">{item.k}</p>
+              <p className="eyebrow mt-2 text-muted-foreground">{item.v}</p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -35,14 +37,30 @@ export function TrustBar() {
 /* ---------------- Featured services ---------------- */
 
 const featured = [
-  { slug: "dental-implants", name: "Dental Implants", img: featureImplants,
-    copy: "A fixed option for replacing missing teeth, assessed case by case." },
-  { slug: "braces", name: "Orthodontics", img: featureOrtho,
-    copy: "Metal and ceramic braces to gradually change tooth position." },
-  { slug: "cosmetic-dentistry", name: "Cosmetic Dentistry", img: featureCosmetic,
-    copy: "Whitening, veneers and laminates focused on appearance." },
-  { slug: "general-dentistry", name: "General Dentistry", img: featureGeneral,
-    copy: "Examinations, fillings and everyday care for the whole family." },
+  {
+    slug: "dental-implants",
+    name: "Dental Implants",
+    img: featureImplants,
+    copy: "A fixed option for replacing missing teeth, assessed case by case.",
+  },
+  {
+    slug: "braces",
+    name: "Orthodontics",
+    img: featureOrtho,
+    copy: "Metal and ceramic braces to gradually change tooth position.",
+  },
+  {
+    slug: "cosmetic-dentistry",
+    name: "Cosmetic Dentistry",
+    img: featureCosmetic,
+    copy: "Whitening, veneers and laminates focused on appearance.",
+  },
+  {
+    slug: "general-dentistry",
+    name: "General Dentistry",
+    img: featureGeneral,
+    copy: "Examinations, fillings and everyday care for the whole family.",
+  },
 ];
 
 export function FeaturedServices() {
@@ -78,7 +96,7 @@ export function FeaturedServices() {
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                   <p className="eyebrow text-gold">Treatment</p>
                   <h3 className="mt-2 font-display text-2xl text-ivory sm:text-3xl">{f.name}</h3>
-                  <p className="mt-2 max-w-sm text-sm leading-relaxed text-ivory/75">{f.copy}</p>
+                  <p className="mt-2 max-w-sm text-sm leading-relaxed text-ivory/70">{f.copy}</p>
                   <span className="mt-4 inline-flex items-center gap-2 text-sm text-ivory">
                     Learn more
                     <ArrowUpRight
@@ -100,15 +118,17 @@ export function FeaturedServices() {
 
 export function ServicesGrid({ heading = true }: { heading?: boolean }) {
   return (
-    <section className="section bg-card" aria-labelledby="services-heading">
+    <section
+      className="section bg-card"
+      aria-labelledby={heading ? "services-heading" : undefined}
+      aria-label={heading ? undefined : "Services"}
+    >
       <div className="shell">
         {heading && (
           <Reveal>
             <SectionHeading
               eyebrow="Services"
-              title={
-                <span id="services-heading">Dental care designed around your needs</span>
-              }
+              title={<span id="services-heading">Dental care designed around your needs</span>}
               intro="Treatment areas listed on publicly available profiles for Dental Avenue Sambrial. The clinic confirms what is available for your case."
             />
           </Reveal>
@@ -116,18 +136,18 @@ export function ServicesGrid({ heading = true }: { heading?: boolean }) {
 
         <ul className="mt-14 grid gap-px border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => {
+            const isFeatured = i < 3;
             const inner = (
               <>
+                {isFeatured && <p className="eyebrow mb-3 text-teal">Popular treatment</p>}
                 <h3 className="font-display text-xl text-navy">{s.name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.short}</p>
                 <span className="mt-6 inline-flex items-center gap-2 text-xs font-medium tracking-wide text-teal">
                   {s.page ? "Explore treatment" : "Ask at consultation"}
-                  {s.page && (
-                    <ArrowUpRight
-                      aria-hidden="true"
-                      className="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                    />
-                  )}
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  />
                 </span>
               </>
             );
@@ -138,17 +158,16 @@ export function ServicesGrid({ heading = true }: { heading?: boolean }) {
                 delay={(i % 3) * 70}
                 className="group bg-background transition-colors duration-300 hover:bg-teal-soft/40"
               >
-                {s.page ? (
-                  <Link
-                    to="/services/$slug"
-                    params={{ slug: s.slug }}
-                    className="block h-full p-7 sm:p-8"
-                  >
-                    {inner}
-                  </Link>
-                ) : (
-                  <div className="h-full p-7 sm:p-8">{inner}</div>
-                )}
+                <Link
+                  to={s.page ? "/services/$slug" : "/contact"}
+                  params={s.page ? { slug: s.slug } : undefined}
+                  className="block h-full p-7 sm:p-8"
+                  aria-label={
+                    s.page ? `Explore ${s.name}` : `Ask about ${s.name} at a consultation`
+                  }
+                >
+                  {inner}
+                </Link>
               </Reveal>
             );
           })}
@@ -170,8 +189,8 @@ export function DoctorSection() {
             <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
               <p className="eyebrow text-teal">Photograph reserved</p>
               <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
-                This space is reserved for an authentic photograph of {doctor.name}, supplied
-                by the clinic. No generated likeness is used.
+                This space is reserved for an authentic photograph of {doctor.name}, supplied by the
+                clinic. No generated likeness is used.
               </p>
             </div>
           </div>
@@ -185,16 +204,16 @@ export function DoctorSection() {
           <span className="gold-rule mt-6" />
           <dl className="mt-8 grid gap-6 sm:grid-cols-2">
             <div className="border-l border-hairline pl-5">
-              <dt className="eyebrow text-[0.625rem] text-muted-foreground">Qualification</dt>
+              <dt className="eyebrow text-muted-foreground">Qualification</dt>
               <dd className="mt-2 font-display text-2xl text-navy">{doctor.qualification}</dd>
             </div>
             <div className="border-l border-hairline pl-5">
-              <dt className="eyebrow text-[0.625rem] text-muted-foreground">Experience</dt>
+              <dt className="eyebrow text-muted-foreground">Experience</dt>
               <dd className="mt-2 font-display text-2xl text-navy">8 years</dd>
             </div>
           </dl>
 
-          <h3 className="eyebrow mt-10 text-[0.625rem] text-muted-foreground">
+          <h3 className="eyebrow mt-10 text-muted-foreground">
             Areas listed on the public profile
           </h3>
           <ul className="mt-4 flex flex-wrap gap-2">
@@ -260,7 +279,7 @@ export function WhySection() {
             <Reveal as="li" key={p.t} delay={i * 70} className="bg-navy p-7 sm:p-8">
               <p className="font-display text-sm text-gold">0{i + 1}</p>
               <h3 className="mt-4 font-display text-xl text-ivory">{p.t}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-ivory/65">{p.d}</p>
+              <p className="mt-3 text-sm leading-relaxed text-ivory/70">{p.d}</p>
             </Reveal>
           ))}
         </ul>
@@ -304,6 +323,8 @@ export function PatientJourney() {
 /* ---------------- Before & after ---------------- */
 
 export function BeforeAfterSection() {
+  if (beforeAfterCases.length === 0) return null;
+
   return (
     <section className="section bg-card" aria-labelledby="results-heading">
       <div className="shell">
@@ -314,13 +335,25 @@ export function BeforeAfterSection() {
             title={<span id="results-heading">Real patient results</span>}
           />
         </Reveal>
-        <Reveal delay={80} className="mt-12">
-          <PendingContent title="Reserved for approved clinic cases">
-            This section displays only genuine before-and-after cases supplied and approved by
-            Dental Avenue, with patient consent. Nothing is shown until the clinic provides
-            real cases.
-          </PendingContent>
-        </Reveal>
+        <ul className="mt-12 grid gap-4 md:grid-cols-2">
+          {beforeAfterCases.map((item) => (
+            <li key={item.treatment} className="overflow-hidden rounded-sm border border-hairline">
+              <div className="grid grid-cols-2">
+                <img
+                  src={item.before}
+                  alt={`Before ${item.treatment}`}
+                  className="aspect-4/3 w-full object-cover"
+                />
+                <img
+                  src={item.after}
+                  alt={`After ${item.treatment}`}
+                  className="aspect-4/3 w-full object-cover"
+                />
+              </div>
+              <p className="p-5 font-display text-xl text-navy">{item.treatment}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -329,6 +362,8 @@ export function BeforeAfterSection() {
 /* ---------------- Reviews ---------------- */
 
 export function ReviewsSection() {
+  if (reviews.length === 0) return null;
+
   return (
     <section className="section" aria-labelledby="reviews-heading">
       <div className="shell">
@@ -340,21 +375,14 @@ export function ReviewsSection() {
           />
         </Reveal>
         <Reveal delay={80} className="mt-12">
-          {reviews.length === 0 ? (
-            <PendingContent title="Reserved for verified Google reviews">
-              This section is ready to display genuine reviews from the clinic's verified
-              Google Business listing. No testimonials, names or ratings have been invented.
-            </PendingContent>
-          ) : (
-            <ul className="grid gap-4 md:grid-cols-3">
-              {reviews.map((r) => (
-                <li key={r.author} className="rounded-sm border border-hairline bg-card p-7">
-                  <p className="text-sm leading-relaxed text-muted-foreground">"{r.text}"</p>
-                  <p className="mt-5 font-display text-lg text-navy">{r.author}</p>
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul className="grid gap-4 md:grid-cols-3">
+            {reviews.map((r) => (
+              <li key={r.author} className="rounded-sm border border-hairline bg-card p-7">
+                <p className="text-sm leading-relaxed text-muted-foreground">"{r.text}"</p>
+                <p className="mt-5 font-display text-lg text-navy">{r.author}</p>
+              </li>
+            ))}
+          </ul>
         </Reveal>
       </div>
     </section>
@@ -385,7 +413,7 @@ export function LocationSection() {
             <div className="flex items-start gap-3">
               <Phone className="mt-0.5 size-4 text-teal" aria-hidden="true" />
               <div>
-                <dt className="eyebrow text-[0.625rem] text-muted-foreground">Phone</dt>
+                <dt className="eyebrow text-muted-foreground">Phone</dt>
                 <dd>
                   <a
                     href={clinic.phoneHref}
@@ -399,7 +427,7 @@ export function LocationSection() {
             <div className="flex items-start gap-3">
               <MapPin className="mt-0.5 size-4 text-teal" aria-hidden="true" />
               <div>
-                <dt className="eyebrow text-[0.625rem] text-muted-foreground">Opening hours</dt>
+                <dt className="eyebrow text-muted-foreground">Opening hours</dt>
                 <dd className="mt-1 text-sm leading-relaxed text-muted-foreground">
                   Opening hours have not yet been confirmed by the clinic. Please call before
                   visiting — this section is ready to display the hours once supplied.
@@ -452,8 +480,8 @@ export function AppointmentCTA() {
             Ready to take the next step?
           </h2>
           <p className="mt-5 max-w-lg text-sm leading-relaxed text-ivory/70">
-            Send an appointment request with your preferred date and time, or call Dental
-            Avenue directly to speak with the clinic.
+            Send an appointment request with your preferred date and time, or call Dental Avenue
+            directly to speak with the clinic.
           </p>
         </Reveal>
         <Reveal delay={100} className="flex flex-wrap gap-3">

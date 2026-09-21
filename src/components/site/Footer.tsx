@@ -10,7 +10,7 @@ export function Footer() {
         <div>
           <p className="font-display text-2xl text-ivory">Dental Avenue</p>
           <span className="gold-rule mt-4" />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-ivory/65">
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-ivory/70">
             {clinic.shortDescription} Treatment enquiries and appointment requests are
             confirmed directly by the clinic.
           </p>
@@ -54,7 +54,7 @@ export function Footer() {
 
         <div>
           <h2 className="eyebrow text-gold">Appointments</h2>
-          <p className="mt-5 text-sm leading-relaxed text-ivory/65">
+          <p className="mt-5 text-sm leading-relaxed text-ivory/70">
             Request a visit online, or call the clinic during opening hours.
           </p>
           <Link to="/contact" className={`${buttonStyles.accent} mt-5 w-full`}>
@@ -68,7 +68,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-ivory/10">
-        <div className="shell flex flex-col gap-4 py-6 text-xs text-ivory/50 md:flex-row md:items-center md:justify-between">
+        <div className="shell flex flex-col gap-4 py-6 text-xs text-ivory/70 md:flex-row md:items-center md:justify-between">
           <p className="max-w-2xl leading-relaxed">{disclaimer}</p>
           <div className="flex items-center gap-6">
             <p>© {new Date().getFullYear()} Dental Avenue. All rights reserved.</p>

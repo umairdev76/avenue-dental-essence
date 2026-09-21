@@ -9,7 +9,7 @@ const base =
   "group inline-flex items-center justify-center gap-2 rounded-sm text-sm font-medium tracking-wide transition-all duration-300 min-h-11 px-6 disabled:opacity-60 disabled:pointer-events-none";
 
 export const buttonStyles = {
-  primary: cn(base, "bg-navy text-primary-foreground hover:bg-navy-soft hover:shadow-lift"),
+  primary: cn(base, "bg-teal text-accent-foreground hover:brightness-110 hover:shadow-lift"),
   accent: cn(base, "bg-teal text-accent-foreground hover:brightness-110 hover:shadow-lift"),
   secondary: cn(
     base,
@@ -120,27 +120,19 @@ export function SectionHeading({
         {title}
       </Heading>
       <span className={cn("gold-rule mt-6", align === "center" && "mx-auto")} />
-      {intro && (
-        <p className={cn("body-lg mt-6", tone === "dark" && "text-ivory/70")}>{intro}</p>
-      )}
+      {intro && <p className={cn("body-lg mt-6", tone === "dark" && "text-ivory/70")}>{intro}</p>}
     </div>
   );
 }
 
 /* ---------------- Pending-content notice ---------------- */
 
-export function PendingContent({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
+export function PendingContent({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="rounded-sm border border-dashed border-navy/20 bg-card/60 p-8 text-center sm:p-12">
-      <p className="eyebrow text-teal">Awaiting clinic content</p>
+    <div className="rounded-sm border border-dashed border-navy/20 bg-card/60 p-6 text-center sm:p-8">
+      <p className="eyebrow text-teal">Clinic content coming soon</p>
       <h3 className="display-3 mt-3 text-navy">{title}</h3>
-      <p className="body-lg mx-auto mt-3 max-w-xl text-sm">{children}</p>
+      <p className="body-lg mx-auto mt-3 max-w-xl">{children}</p>
     </div>
   );
 }
